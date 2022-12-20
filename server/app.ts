@@ -1,5 +1,6 @@
 import express, { Express, Request, Response, NextFunction, ErrorRequestHandler, RequestHandler } from 'express'
 import path from 'path'
+import userApi from './controllers/userController';
 
 export const app: Express = express();
 
@@ -11,8 +12,8 @@ app.use(express.urlencoded({ extended: true }) as RequestHandler)
 app.get('/', (req, res) => {
   return res.sendFile(path.resolve(__dirname, '../index.html'))
 })
-
-app.get('/test', (req, res) => {
+// changed to post to test db
+app.post('/test', userApi.verifyUser,(req, res) => {
   return res.json({testMessage: 'hi you have made it'})
 })
 
