@@ -1,12 +1,12 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import {createPortal} from 'react-dom'
-import {TextField, Container, Box, Grid, Button, Typography} from '@mui/material';
-import { styled } from '@mui/material/styles';
-import { JsxElement } from 'typescript';
+import {TextField, Container, Box, Grid, Button} from '@mui/material';
 
 
 interface Props {
   setOpenSignup: React.Dispatch<React.SetStateAction<boolean>>;
+  setOpenSuccessfulSignup: React.Dispatch<React.SetStateAction<boolean>>;
+
 }
   
 
@@ -14,24 +14,50 @@ interface Props {
 
 
 
-const Signup = ({setOpenSignup} : Props) => { 
+const Signup = ({setOpenSignup, setOpenSuccessfulSignup} : Props) => { 
   const [username, setUsername] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [password, setPassword] = useState('');
   const [verifyPassword, setVerifyPassword] = useState('');
-  const [invalid, setInvalid] = useState(false);
-  const [signupSuccess, setSignupSuccess] = useState(false);
+  const [passwordInvalid, setPasswordInvalid] = useState(false);
   const passRef = useRef<HTMLInputElement>(null);
   const verifyRef = useRef<HTMLInputElement>(null);
 
   const handleSignup = () => {
     if(password !== verifyPassword) {
       verifyRef.current?.focus();
-      console.log('asdf');
       return;
     }
+
+    const signupBody = {
+      username,
+      firstName,
+      lastName,
+      password,
+    };
+
+    fetch('/users/signup', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify(signupBody)
+    }).then(() => {
+      setOpenSignup(false);
+      setOpenSuccessfulSignup(true);
+    })
+
+
   }
+
+  useEffect(() => {
+    if(password !== verifyPassword && verifyPassword.length) {
+      setPasswordInvalid(true);
+    } else {
+      setPasswordInvalid(false);
+    }
+  },[password, verifyPassword])
 
 
 
@@ -87,6 +113,7 @@ const Signup = ({setOpenSignup} : Props) => {
             <Grid 
               item
             >
+              <div>
               <TextField 
                 type="password" 
                 required
@@ -94,7 +121,10 @@ const Signup = ({setOpenSignup} : Props) => {
                 value={verifyPassword}
                 onChange={e => setVerifyPassword(e.currentTarget.value)}
                 label="Verify Password"
+                error={passwordInvalid}
+                helperText={passwordInvalid && "Passwords do not match"}
                 placeholder="Verify Password"/>
+                </div>
             </Grid>
             <Grid sx={{'& .MuiButton-root': { marginLeft: "10px", marginRight: "10px"}}}>
               <Button 
