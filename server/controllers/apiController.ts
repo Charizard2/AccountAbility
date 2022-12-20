@@ -19,7 +19,7 @@
 //         } catch (err) {
 //             res.locals.usersaved = false;
 //             return next({
-//                 log: `Express error handler caught unknown m`,
+//                 log: err,'Express error handler caught userController.saveUser middleware',
 //                 status: 500,
 //                 message: {err: 'An error occured'}
 //             })
