@@ -1,12 +1,13 @@
 import { useState } from 'react'
+import {Routes, Route} from 'react-router-dom';
+import Login from './Login';
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
-    <div className="App">
-    just checking if this renders (app.tsx) 
-    </div>
+    <Routes>
+      <Route path="/" element={<Login/>}/>
+    </Routes>
   )
 }
 
