@@ -21,8 +21,8 @@ app.get('/test', (req: Request, res: Response) => {
   return res.json({testMessage: 'hi you have made it'})
 })
 
-app.use('/user', userRouter)
 app.use('/api', apiRouter)
+app.use('/user', userRouter)
 app.use('/post', postRouter);
 app.use('/comment', commentRouter)
 
