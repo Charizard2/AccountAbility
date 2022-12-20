@@ -1,23 +1,31 @@
 import express, { Express, Request, Response, NextFunction, ErrorRequestHandler, RequestHandler } from 'express'
 import path from 'path'
-import userApi from './controllers/userController';
+import cookieParser from 'cookie-parser'
+import apiRouter from './routes/apiRouter'
+import userRouter from './routes/userRouter'
+import postRouter from './routes/postRouter'
+import commentRouter from './routes/commentRouter'
 
-export const app: Express = express();
+export const app = express();
 
 app.use(express.json() as RequestHandler)
 app.use(express.urlencoded({ extended: true }) as RequestHandler)
 
 // app.use('/', express.static(path.resolve(__dirname, "../index.html")))
 
-app.get('/', (req, res) => {
+app.get('/', (req: Request, res: Response) => {
   return res.sendFile(path.resolve(__dirname, '../index.html'))
 })
-// changed to post to test db
-app.post('/test', userApi.verifyUser,(req, res) => {
+
+app.get('/test', (req: Request, res: Response) => {
   return res.json({testMessage: 'hi you have made it'})
 })
 
-// Catchall route handler
+app.use('/user', userRouter)
+app.use('/api', apiRouter)
+app.use('/post', postRouter);
+app.use('/comment', commentRouter)
+
 app.use('/', (req: Request, res: Response) => {
   return res.sendStatus(404)
 })
