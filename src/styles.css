@@ -1,0 +1,30 @@
+
+body {
+  height: 100vh;
+  background-color: lightgrey;
+}
+
+#root {
+  height: 100%;
+}
+
+#login-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 20px;
+  border-radius: 30px;
+  background-color: white;
+  width: 31%;
+  height: 40%;
+
+
+}
+
+.login-container {
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
