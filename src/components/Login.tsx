@@ -34,10 +34,6 @@ const Login = () => {
     // })
   }
 
-  const handleSignup = () => {
-    setOpenSignup(!openSignup);
-  }
-
   return (
     <>
     <Container sx={{
@@ -66,7 +62,7 @@ const Login = () => {
             value={password} 
             onChange={e => setPassword(e.target.value)} label="Password" />
             <div>
-              <Button variant="outlined" onClick={handleSignup} size="medium" type="submit">
+              <Button variant="outlined" onClick={() => setOpenSignup(true)} size="medium" type="submit">
                 Signup
               </Button>
               <Button variant="contained" size="medium" onClick={handleLogin} type="submit">
