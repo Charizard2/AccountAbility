@@ -10,6 +10,8 @@ const PostBox = () => {
       post
     }
 
+
+    // maybe use usemutation here
     fetch('/post', {
       method: 'POST',
       headers: {
