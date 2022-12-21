@@ -1,11 +1,16 @@
 
 body {
   height: 100vh;
-  background-color: lightgrey;
+  left: 0;
+  right: 0;
+  margin:0;
+  background-color: #1DA1F2;
 }
+
 
 #root {
   height: 100%;
+  width: 100%;
 }
 
 #login-form {
@@ -16,9 +21,9 @@ body {
   padding: 20px;
   border-radius: 30px;
   background-color: white;
-  width: 31%;
-  height: 40%;
-
+  width:281px;
+  height: 281px;
+  box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
 
 }
 
@@ -28,3 +33,187 @@ body {
   justify-content: center;
   height: 100%;
 }
+
+#modal {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  z-index: 200;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+#signup-form {
+  background-color: white;
+  padding: 20;
+  border-radius: 5;
+  width: 335px;
+  border-radius: 35px;
+  height: 520px;
+  overflow: auto;
+  box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+}
+
+#signup-container {
+  gap: 10px 0px;
+  margin-left: 0;
+  margin-right: 0;
+  width: 100%;
+  padding-left: 0px;
+  padding-right: 0px;
+  display: flex;
+  justify-content: center;
+  margin-top: 25px;
+}
+
+#signup-confirm {
+  background-color: white;
+  width: 335px;
+  border-radius: 35px;
+  height: 335px;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap:20px;
+}
+
+
+#home-container {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+
+}
+
+#navbar {
+  width: 15%;
+  top: 0;
+  bottom: 0;
+  
+  background-color: white;
+  border-right: 1px solid;
+  border-color: lightgrey;
+}
+
+#navbar li {
+  font-size: 18px;
+  letter-spacing: 4px;
+  height: 30px;
+  margin-top: 20px;
+  margin-left: 20px;
+  padding: 5px;
+
+}
+
+
+#logout {
+  position: absolute;
+  bottom: 30px;
+
+}
+
+
+#views {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  
+
+}
+
+#feed {
+  overflow: auto;
+}
+
+#post-box {
+  height: 25%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid;
+  border-color: lightgrey;
+}
+#post-input {
+  background-color: white;
+  width: 50ch;
+  height: 100%;
+  
+}
+
+#search-box {
+  background-color: white;
+  right: 0;
+  height: 100%;
+  width: 25%;
+  border-left: 1px solid;
+  border-color: lightgrey
+}
+
+#search-input {
+  display: flex;
+  justify-content: center;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+
+#navbar {
+  position: fixed;
+  top: 0;
+  height: 100vh;
+  width: 20%;
+  
+  min-width: 170px;
+}
+
+#views {
+  float: right;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 80%;
+  background-color: red;
+  padding: 0px;
+
+}
+
+
+
+
+
+#post-box {
+  height: 30%;
+  background-color: green;
+} */
+
+

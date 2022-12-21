@@ -3,6 +3,8 @@ import bcrypt from 'bcrypt';
 const saltRounds = 10;
 //const RequestHandler = require('express')
 // import  db  from '../models/UserModel'
+//import  db  from '../models/UserModel'
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const db = require('../models/UserModel')
 
 
@@ -22,9 +24,9 @@ const userController: UserController = {
             if (err){
              return next(err)
             } else {
+               
                 const inputVal = [username, hashedPW, firstname, lastname];
-                const queryString = 'INSERT INTO "Users"(username, password, firstname, lastname) VALUES($1,$2,$3,$4) RETURNING *';
-
+                const queryString = 'INSERT INTO "Users"(username, password, firstname, lastname) VALUES($1,$2,$3,$4) RETURNING *'
                 db.query(queryString, inputVal)
                 .then((data: any) => {
                     //userInfo = await db.query(queryString,inputVal);
