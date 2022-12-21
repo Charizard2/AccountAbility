@@ -21,7 +21,6 @@ const Signup = ({setOpenSignup, setOpenSuccessfulSignup} : Props) => {
   const [password, setPassword] = useState('');
   const [verifyPassword, setVerifyPassword] = useState('');
   const [passwordInvalid, setPasswordInvalid] = useState(false);
-  const passRef = useRef<HTMLInputElement>(null);
   const verifyRef = useRef<HTMLInputElement>(null);
 
   const handleSignup = () => {
@@ -104,7 +103,6 @@ const Signup = ({setOpenSignup, setOpenSuccessfulSignup} : Props) => {
               <TextField
                 type="password" 
                 label="Password" 
-                inputRef={passRef}
                 required
                 value={password}
                 onChange={e => setPassword(e.currentTarget.value)}
