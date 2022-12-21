@@ -1,10 +1,12 @@
-import React, {useState} from 'react';
-import {TextField, Container, Box, Grid, Button } from '@mui/material';
-import { styled } from '@mui/material/styles';
+import React, {useState, useRef, useEffect} from 'react';
+import {createPortal} from 'react-dom'
+import {TextField, Container, Box, Grid, Button} from '@mui/material';
 
 
 interface Props {
   setOpenSignup: React.Dispatch<React.SetStateAction<boolean>>;
+  setOpenSuccessfulSignup: React.Dispatch<React.SetStateAction<boolean>>;
+
 }
   
 
@@ -12,10 +14,132 @@ interface Props {
 
 
 
-const Signup = ({setOpenSignup} : Props) => { 
+const Signup = ({setOpenSignup, setOpenSuccessfulSignup} : Props) => { 
+  const [username, setUsername] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [password, setPassword] = useState('');
+  const [verifyPassword, setVerifyPassword] = useState('');
+  const [passwordInvalid, setPasswordInvalid] = useState(false);
+  const passRef = useRef<HTMLInputElement>(null);
+  const verifyRef = useRef<HTMLInputElement>(null);
+
+  const handleSignup = () => {
+    if(password !== verifyPassword) {
+      verifyRef.current?.focus();
+      return;
+    }
+
+    const signupBody = {
+      username,
+      firstName,
+      lastName,
+      password,
+    };
+
+    fetch('/users/signup', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify(signupBody)
+    }).then(() => {
+      setOpenSignup(false);
+      setOpenSuccessfulSignup(true);
+    })
+
+
+  }
+
+  useEffect(() => {
+    if(password !== verifyPassword && verifyPassword.length) {
+      setPasswordInvalid(true);
+    } else {
+      setPasswordInvalid(false);
+    }
+  },[password, verifyPassword])
+
+
 
   return(
-    <div>Signup</div>
+    createPortal(
+      <Container component="main" id="modal">
+        <Box component="form"
+          id="signup-form" 
+          onSubmit={(event) => event.preventDefault()}
+        >
+          <Grid container id="signup-container"
+            sx={{'& .MuiTextField-root': { m: 1, width: '30ch', backgroundColor: 'white'}}}
+          >
+            <Grid item>
+              <TextField 
+                type="text" 
+                required
+                value={username}
+                onChange={e => setUsername(e.currentTarget.value)}
+                label="Username" 
+                placeholder="Username"/>
+            </Grid>
+            <Grid item>
+              <TextField 
+                type="text" 
+                required
+                value={firstName}
+                onChange={e => setFirstName(e.currentTarget.value)}
+                label="First name" 
+                placeholder="First name"/>
+            </Grid>
+            <Grid item>
+              <TextField 
+                type="text" 
+                required
+                value={lastName}
+                onChange={e => setLastName(e.currentTarget.value)}
+                label="Last name" 
+                placeholder="Last name"/>
+            </Grid>
+            <Grid 
+              item 
+            >
+              <TextField
+                type="password" 
+                label="Password" 
+                inputRef={passRef}
+                required
+                value={password}
+                onChange={e => setPassword(e.currentTarget.value)}
+                placeholder="Password"/>
+            </Grid>
+            <Grid 
+              item
+            >
+              <div>
+              <TextField 
+                type="password" 
+                required
+                inputRef={verifyRef}
+                value={verifyPassword}
+                onChange={e => setVerifyPassword(e.currentTarget.value)}
+                label="Verify Password"
+                error={passwordInvalid}
+                helperText={passwordInvalid && "Passwords do not match"}
+                placeholder="Verify Password"/>
+                </div>
+            </Grid>
+            <Grid sx={{'& .MuiButton-root': { marginLeft: "10px", marginRight: "10px"}}}>
+              <Button 
+                onClick={() => setOpenSignup(false)}
+                variant="outlined" >Cancel</Button>
+              <Button 
+                type="submit" 
+                onClick={handleSignup}
+                variant="contained"  >Signup</Button>
+            </Grid>
+          </Grid>
+        </Box>
+    </Container>, 
+      document.body
+    )
   )
     
 };

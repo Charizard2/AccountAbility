@@ -16,9 +16,9 @@ body {
   padding: 20px;
   border-radius: 30px;
   background-color: white;
-  width: 31%;
-  height: 40%;
-
+  width:281px;
+  height: 281px;
+  box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
 
 }
 
@@ -28,3 +28,52 @@ body {
   justify-content: center;
   height: 100%;
 }
+
+#modal {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  z-index: 200;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#signup-form {
+  background-color: white;
+  padding: 20;
+  border-radius: 5;
+  width: 335px;
+  border-radius: 35px;
+  height: 520px;
+  overflow: auto;
+  box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+}
+
+#signup-container {
+  gap: 10px 0px;
+  margin-left: 0;
+  margin-right: 0;
+  width: 100%;
+  padding-left: 0px;
+  padding-right: 0px;
+  display: flex;
+  justify-content: center;
+  margin-top: 25px;
+}
+
+#signup-confirm {
+  background-color: white;
+  width: 335px;
+  border-radius: 35px;
+  height: 335px;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap:20px;
+}
+

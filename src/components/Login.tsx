@@ -1,13 +1,14 @@
 import React, {useState} from 'react'
-import {Container, TextField, Box, Button} from '@mui/material'
+import {Container, TextField, Box, Button, Typography} from '@mui/material'
 import Signup from './Signup'
-
+import SignupMessage from './SignupMessage'
 
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [openSignup, setOpenSignup] = useState(false);
   const [valid, setValid] = useState(true);
+  const [openSuccessfulSignup, setOpenSuccessfulSignup] = useState(false);
   const [incorrectCreds, setIncorrectCreds] = useState(true);
 
 
@@ -34,10 +35,6 @@ const Login = () => {
     // })
   }
 
-  const handleSignup = () => {
-    setOpenSignup(!openSignup);
-  }
-
   return (
     <>
     <Container sx={{
@@ -55,6 +52,7 @@ const Login = () => {
             '& .MuiButton-root':{m:1},
           }}
         >
+          <Typography>LOGIN</Typography>
           <TextField 
             label="Username"
             placeholder="Username"
@@ -66,7 +64,7 @@ const Login = () => {
             value={password} 
             onChange={e => setPassword(e.target.value)} label="Password" />
             <div>
-              <Button variant="outlined" onClick={handleSignup} size="medium" type="submit">
+              <Button variant="outlined" onClick={() => setOpenSignup(true)} size="medium" type="submit">
                 Signup
               </Button>
               <Button variant="contained" size="medium" onClick={handleLogin} type="submit">
@@ -77,7 +75,8 @@ const Login = () => {
             
         </Box>
     </Container>
-    {openSignup && <Signup setOpenSignup={setOpenSignup}/>}
+    {openSignup && <Signup setOpenSignup={setOpenSignup} setOpenSuccessfulSignup={setOpenSuccessfulSignup}/>}
+    {openSuccessfulSignup && <SignupMessage setOpenSuccessfulSignup={setOpenSuccessfulSignup}/>}
     </>
   )
 }
