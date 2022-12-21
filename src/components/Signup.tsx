@@ -21,9 +21,11 @@ const Signup = ({setOpenSignup, setOpenSuccessfulSignup} : Props) => {
   const [password, setPassword] = useState('');
   const [verifyPassword, setVerifyPassword] = useState('');
   const [passwordInvalid, setPasswordInvalid] = useState(false);
+  const [validSignup, setValidSignup] = useState(true);
   const verifyRef = useRef<HTMLInputElement>(null);
 
-  const handleSignup = () => {
+  const handleSignup = (e) => {
+    e.preventDefault();
     if(password !== verifyPassword) {
       verifyRef.current?.focus();
       return;
@@ -42,21 +44,28 @@ const Signup = ({setOpenSignup, setOpenSuccessfulSignup} : Props) => {
         'content-type': 'application/json',
       },
       body: JSON.stringify(signupBody)
-    }).then(() => {
-      setOpenSignup(false);
-      setOpenSuccessfulSignup(true);
+    }).then((response) => {
+      // if(response.status === 200) {
+        setOpenSignup(false);
+        setOpenSuccessfulSignup(true);
+        return;
+      // } else {
+        // setValidSignup(false);
+      // }
+
+      
     })
 
 
   }
 
-  useEffect(() => {
-    if(password !== verifyPassword && verifyPassword.length) {
-      setPasswordInvalid(true);
-    } else {
-      setPasswordInvalid(false);
-    }
-  },[password, verifyPassword])
+  // useEffect(() => {
+  //   if(password !== verifyPassword && verifyPassword.length) {
+  //     setPasswordInvalid(true);
+  //   } else {
+  //     setPasswordInvalid(false);
+  //   }
+  // },[password, verifyPassword])
 
 
 
@@ -65,7 +74,7 @@ const Signup = ({setOpenSignup, setOpenSuccessfulSignup} : Props) => {
       <Container component="main" id="modal">
         <Box component="form"
           id="signup-form" 
-          onSubmit={(event) => event.preventDefault()}
+          onSubmit={(event) => handleSignup(event)}
         >
           <Grid container id="signup-container"
             sx={{'& .MuiTextField-root': { m: 1, width: '30ch', backgroundColor: 'white'}}}
@@ -119,8 +128,8 @@ const Signup = ({setOpenSignup, setOpenSuccessfulSignup} : Props) => {
                 value={verifyPassword}
                 onChange={e => setVerifyPassword(e.currentTarget.value)}
                 label="Verify Password"
-                error={passwordInvalid}
-                helperText={passwordInvalid && "Passwords do not match"}
+                error={verifyPassword && password !== verifyPassword}
+                helperText={(password !== verifyPassword && verifyPassword.length) && "Passwords do not match"}
                 placeholder="Verify Password"/>
                 </div>
             </Grid>
@@ -130,10 +139,11 @@ const Signup = ({setOpenSignup, setOpenSuccessfulSignup} : Props) => {
                 variant="outlined" >Cancel</Button>
               <Button 
                 type="submit" 
-                onClick={handleSignup}
+                // onClick={handleSignup}
                 variant="contained"  >Signup</Button>
             </Grid>
           </Grid>
+          {!validSignup && <p>Username taken please choose another</p>}
         </Box>
     </Container>, 
       document.body

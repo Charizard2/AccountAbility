@@ -27,17 +27,23 @@ const Login = () => {
       username,
       password
     }
-    console.log(loginCredentials);
-    navigate('/home/feed');
+    
+    fetch('/user', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application-json'
+      },
+      body: JSON.stringify(loginCredentials),
+    }).then((response) => {
+      if(response.status === 200) {
+        navigate('/home/feed');        
+      }
+    })
 
 
-    // fetch('/user', {
-    //   method: 'POST',
-    //   headers: {
-    //     'content-type': 'application-json'
-    //   },
-    //   body: JSON.stringify(loginCredentials),
-    // })
+
+
+
   }
 
   return (
