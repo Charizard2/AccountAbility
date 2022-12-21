@@ -60,15 +60,6 @@ const Signup = ({setOpenSignup, setOpenSuccessfulSignup} : Props) => {
 
   }
 
-  useEffect(() => {
-    if(password !== verifyPassword && verifyPassword.length) {
-      setPasswordInvalid(true);
-    } else {
-      setPasswordInvalid(false);
-    }
-  },[password, verifyPassword])
-
-
 
   return(
     createPortal(
@@ -129,8 +120,8 @@ const Signup = ({setOpenSignup, setOpenSuccessfulSignup} : Props) => {
                 value={verifyPassword}
                 onChange={e => setVerifyPassword(e.currentTarget.value)}
                 label="Verify Password"
-                error={passwordInvalid}
-                helperText={passwordInvalid && "Passwords do not match"}
+                error={(password !== verifyPassword && !!verifyPassword)}
+                helperText={(password !== verifyPassword && !!verifyPassword) && "Passwords do not match"}
                 placeholder="Verify Password"/>
                 </div>
             </Grid>
