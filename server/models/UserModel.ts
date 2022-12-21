@@ -21,4 +21,9 @@ module.exports = {
     },
 };
 
-export {};
+// export default {
+//     query: (text: any, params: any, cb: any ) => {
+//         //console.log('text:', text)
+//         return pool.query(text, params, cb);
+//     },
+// }

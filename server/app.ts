@@ -10,6 +10,7 @@ export const app = express();
 
 app.use(express.json() as RequestHandler)
 app.use(express.urlencoded({ extended: true }) as RequestHandler)
+app.use(cookieParser())
 
 // app.use('/', express.static(path.resolve(__dirname, "../index.html")))
 

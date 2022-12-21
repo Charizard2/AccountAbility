@@ -2,6 +2,7 @@ import {Request, Response, NextFunction, RequestHandler, ErrorRequestHandler} fr
 import bcrypt from 'bcrypt';
 const saltRounds = 10;
 //const RequestHandler = require('express')
+// import  db  from '../models/UserModel'
 //import  db  from '../models/UserModel'
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const db = require('../models/UserModel')
@@ -17,7 +18,7 @@ const userController: UserController = {
     createUser: async (req, res, next) => {
 
         const {username, password, firstname, lastname} = req.body;
-        if (!username || !password || !firstname || !lastname) return next((err: ErrorRequestHandler)=> next({message:{err:'Please fill out all fields!'}}))
+        if (!username || !password || !firstname || !lastname) return next({message:{err:'Please fill out all fields!'}})
         const saltRounds = 10
         bcrypt.hash(password, saltRounds, (err: any, hashedPW: string) => {
             if (err){
@@ -29,6 +30,7 @@ const userController: UserController = {
                 db.query(queryString, inputVal)
                 .then((data: any) => {
                     //userInfo = await db.query(queryString,inputVal);
+                    res.locals.username = username
                     res.locals.usercreated = true;
                     console.log('user created successfully')
                     return next();
@@ -37,7 +39,7 @@ const userController: UserController = {
                     return next({
                         log: `Error occured in UserController.createUser`,
                         status: 500,
-                        message: {err: 'An error occured'}
+                        message: {err: 'An error occured in userController.createUser'}
                     })
                 })
             }
@@ -83,3 +85,7 @@ const userController: UserController = {
  export default userController;
  export {};
 
+/*
+UPDATE "public"."Users" SET "ssid"='fsdf' WHERE "user_id"=32 RETURNING "username", "password", "firstname", "lastname", "user_id", "ssid";
+
+*/
