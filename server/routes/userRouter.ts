@@ -14,13 +14,13 @@ router.post('/test',  userController.createUser, cookieController.setSSIDCookie,
 })
 // userController.verifyUsername, bcrypt.verifyPassword, cookieController.setCookie,   
 // reacType: userCOntroller.verifyUser, cookieController.setSSIDCookie, sessionController.startSession
-router.get('/login', (req: Request, res: Response) => {
+router.get('/login', userController.verifyUser, (req: Request, res: Response) => {
   return res.status(200).json({})
 })
 
 // userController.createUser (check if username exists), bcrypt.hashPassword (hash PW and send username/pw to DB),  
 // reacType: userController.createUser, cookieController.setSSIDCookie, sessionController.startSession
-router.get('/signup', (req: Request, res: Response) => {
+router.post('/signup', userController.createUser, (req: Request, res: Response) => {
   return res.status(200).json({})
 })
 // userController.logout (delete hashed cookie)

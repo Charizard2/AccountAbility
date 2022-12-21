@@ -17,16 +17,16 @@ const userController: UserController = {
     //Inserts userInfo from setup page into user table
     createUser: async (req, res, next) => {
 
-        const {username, password, firstname, lastname} = req.body;
-        if (!username || !password || !firstname || !lastname) return next({message:{err:'Please fill out all fields!'}})
+        const {username, password, Firstname, Lastname} = req.body;
+        if (!username || !password || !Firstname || !Lastname) return next({message:{err:'Please fill out all fields!'}})
         const saltRounds = 10
         bcrypt.hash(password, saltRounds, (err: any, hashedPW: string) => {
             if (err){
              return next(err)
             } else {
                
-                const inputVal = [username, hashedPW, firstname, lastname];
-                const queryString = 'INSERT INTO "Users"(username, password, firstname, lastname) VALUES($1,$2,$3,$4) RETURNING *'
+                const inputVal = [username, hashedPW, Firstname, Lastname];
+                const queryString = 'INSERT INTO "Users"(username, password, Firstname, Lastname) VALUES($1,$2,$3,$4) RETURNING *'
                 db.query(queryString, inputVal)
                 .then((data: any) => {
                     //userInfo = await db.query(queryString,inputVal);
