@@ -2,6 +2,8 @@ import React, {useState} from 'react'
 import {Container, TextField, Box, Button, Typography} from '@mui/material'
 import Signup from './Signup'
 import SignupMessage from './SignupMessage'
+import {useNavigate} from 'react-router-dom'
+
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -10,6 +12,7 @@ const Login = () => {
   const [valid, setValid] = useState(true);
   const [openSuccessfulSignup, setOpenSuccessfulSignup] = useState(false);
   const [incorrectCreds, setIncorrectCreds] = useState(true);
+  const navigate = useNavigate();
 
 
   const handleLogin = () => {
@@ -25,6 +28,8 @@ const Login = () => {
       password
     }
     console.log(loginCredentials);
+    navigate('/home/feed');
+
 
     // fetch('/user', {
     //   method: 'POST',
@@ -41,6 +46,7 @@ const Login = () => {
       display:"flex",
       alignItems:"center",
       justifyContent:"center",
+      width:"100%",
       height:"100%"}}
     >
         <Box

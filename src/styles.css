@@ -1,11 +1,16 @@
 
 body {
   height: 100vh;
-  background-color: lightgrey;
+  left: 0;
+  right: 0;
+  margin:0;
+  background-color: #1DA1F2;
 }
+
 
 #root {
   height: 100%;
+  width: 100%;
 }
 
 #login-form {
@@ -39,6 +44,8 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  padding-left: 0;
+  padding-right: 0;
 }
 
 #signup-form {
@@ -76,4 +83,137 @@ body {
   align-items: center;
   gap:20px;
 }
+
+
+#home-container {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+
+}
+
+#navbar {
+  width: 15%;
+  top: 0;
+  bottom: 0;
+  
+  background-color: white;
+  border-right: 1px solid;
+  border-color: lightgrey;
+}
+
+#navbar li {
+  font-size: 18px;
+  letter-spacing: 4px;
+  height: 30px;
+  margin-top: 20px;
+  margin-left: 20px;
+  padding: 5px;
+
+}
+
+
+#logout {
+  position: absolute;
+  bottom: 30px;
+
+}
+
+
+#views {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  
+
+}
+
+#feed {
+  overflow: auto;
+}
+
+#post-box {
+  height: 25%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid;
+  border-color: lightgrey;
+}
+#post-input {
+  background-color: white;
+  width: 50ch;
+  height: 100%;
+  
+}
+
+#search-box {
+  background-color: white;
+  right: 0;
+  height: 100%;
+  width: 25%;
+  border-left: 1px solid;
+  border-color: lightgrey
+}
+
+#search-input {
+  display: flex;
+  justify-content: center;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+
+#navbar {
+  position: fixed;
+  top: 0;
+  height: 100vh;
+  width: 20%;
+  
+  min-width: 170px;
+}
+
+#views {
+  float: right;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 80%;
+  background-color: red;
+  padding: 0px;
+
+}
+
+
+
+
+
+#post-box {
+  height: 30%;
+  background-color: green;
+} */
+
 
