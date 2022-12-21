@@ -38,7 +38,8 @@ const Signup = ({setOpenSignup, setOpenSuccessfulSignup} : Props) => {
       password,
     };
 
-    fetch('/user/signup', {
+
+    fetch('/api/user/signup', {
       method: 'POST',
       headers: {
         'content-type': 'application/json',

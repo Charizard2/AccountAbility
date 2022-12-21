@@ -5,11 +5,12 @@ import apiRouter from './routes/apiRouter'
 import userRouter from './routes/userRouter'
 import postRouter from './routes/postRouter'
 import commentRouter from './routes/commentRouter'
-
+import cors from 'cors'
 export const app = express();
 
 app.use(express.json() as RequestHandler)
 app.use(express.urlencoded({ extended: true }) as RequestHandler)
+// app.use(cors())
 app.use(cookieParser())
 
 // app.use('/', express.static(path.resolve(__dirname, "../index.html")))
@@ -22,10 +23,10 @@ app.get('/test', (req: Request, res: Response) => {
   return res.json({testMessage: 'hi you have made it'})
 })
 
-app.use('/api', apiRouter)
-app.use('/user', userRouter)
-app.use('/post', postRouter);
-app.use('/comment', commentRouter)
+// app.use('/api', apiRouter)
+app.use('/api/user', userRouter)
+app.use('/api/post', postRouter);
+app.use('/api/comment', commentRouter)
 
 app.use('/', (req: Request, res: Response) => {
   return res.sendStatus(404)
