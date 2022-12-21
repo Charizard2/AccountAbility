@@ -24,7 +24,7 @@ const Signup = ({setOpenSignup, setOpenSuccessfulSignup} : Props) => {
   const [validSignup, setValidSignup] = useState(true);
   const verifyRef = useRef<HTMLInputElement>(null);
 
-  const handleSignup = (e) => {
+  const handleSignup = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if(password !== verifyPassword) {
       verifyRef.current?.focus();
@@ -38,20 +38,20 @@ const Signup = ({setOpenSignup, setOpenSuccessfulSignup} : Props) => {
       password,
     };
 
-    fetch('/users/signup', {
+    fetch('/user/signup', {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
       },
       body: JSON.stringify(signupBody)
     }).then((response) => {
-      // if(response.status === 200) {
+      if(response.status === 200) {
         setOpenSignup(false);
         setOpenSuccessfulSignup(true);
         return;
-      // } else {
-        // setValidSignup(false);
-      // }
+      } else {
+        setValidSignup(false);
+      }
 
       
     })
@@ -59,13 +59,13 @@ const Signup = ({setOpenSignup, setOpenSuccessfulSignup} : Props) => {
 
   }
 
-  // useEffect(() => {
-  //   if(password !== verifyPassword && verifyPassword.length) {
-  //     setPasswordInvalid(true);
-  //   } else {
-  //     setPasswordInvalid(false);
-  //   }
-  // },[password, verifyPassword])
+  useEffect(() => {
+    if(password !== verifyPassword && verifyPassword.length) {
+      setPasswordInvalid(true);
+    } else {
+      setPasswordInvalid(false);
+    }
+  },[password, verifyPassword])
 
 
 
@@ -128,8 +128,8 @@ const Signup = ({setOpenSignup, setOpenSuccessfulSignup} : Props) => {
                 value={verifyPassword}
                 onChange={e => setVerifyPassword(e.currentTarget.value)}
                 label="Verify Password"
-                error={verifyPassword && password !== verifyPassword}
-                helperText={(password !== verifyPassword && verifyPassword.length) && "Passwords do not match"}
+                error={passwordInvalid}
+                helperText={passwordInvalid && "Passwords do not match"}
                 placeholder="Verify Password"/>
                 </div>
             </Grid>
