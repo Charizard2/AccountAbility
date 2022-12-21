@@ -1,10 +1,14 @@
 import express, {Request, Response} from 'express';
-// import userController form '../controllers/userController
+import userController from '../controllers/userController';
 import { cookieController } from '../controllers/cookieController';
 
 const router = express.Router()
 
-router.get('/test', cookieController.setSSIDCookie, (req: Request, res: Response) => {
+router.get('/test',  cookieController.verifySSIDCookie, (req: Request, res: Response) => {
+  return res.status(200).json({userRoute:' Works'})
+})
+router.post('/test',  userController.createUser, cookieController.setSSIDCookie, cookieController.verifySSIDCookie, (req: Request, res: Response) => {
+  console.log(res.locals)
   return res.status(200).json({userRoute:' Works'})
 })
 // userController.verifyUsername, bcrypt.verifyPassword, cookieController.setCookie,   
