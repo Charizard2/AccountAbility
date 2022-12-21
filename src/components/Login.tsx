@@ -11,7 +11,7 @@ const Login = () => {
   const [openSignup, setOpenSignup] = useState(false);
   const [valid, setValid] = useState(true);
   const [openSuccessfulSignup, setOpenSuccessfulSignup] = useState(false);
-  const [incorrectCreds, setIncorrectCreds] = useState(true);
+  const [incorrectCreds, setIncorrectCreds] = useState(false);
   const navigate = useNavigate();
 
 
@@ -28,7 +28,7 @@ const Login = () => {
       password
     }
     
-    fetch('/user', {
+    fetch('/user/login', {
       method: 'POST',
       headers: {
         'content-type': 'application-json'
@@ -37,6 +37,8 @@ const Login = () => {
     }).then((response) => {
       if(response.status === 200) {
         navigate('/home/feed');        
+      } else {
+        setIncorrectCreds(true);
       }
     })
 
@@ -84,6 +86,7 @@ const Login = () => {
               </Button>
             </div>
             {!valid && <p>Please enter your username and password.</p>}
+            {incorrectCreds && <p>Incorrect username or password!</p>}
             
         </Box>
     </Container>
