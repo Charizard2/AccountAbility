@@ -23,8 +23,7 @@ const SignupMessage = ({setOpenSuccessfulSignup} : Props) => {
       </Container>, 
       document.body
     )
-  )
-    
+  ) 
 };
 
 export default SignupMessage;

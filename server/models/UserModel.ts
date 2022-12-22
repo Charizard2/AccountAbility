@@ -3,8 +3,8 @@
 
 // import * as pkg from 'pg';
 // const { Pool } = pkg;
-const { Pool } = require('pg');
-
+// const { Pool } = require('pg');
+import {Pool} from 'pg'
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config();
 //const url: any = process.env.PG_URI;
@@ -17,26 +17,19 @@ const pool: any = new Pool({
     connectionString: url
 });
 
-module.exports = {
-    query: (text: any, params: any, cb: any ) => {
+export default  {
+    query: (text: any, params: any, cb?: any ) => {
         //console.log('text:', text)
         return pool.query(text, params, cb);
     },
-};
+}
 
-// const db = {  
-//     query: (text: string, params: string[]) => {
-//       console.log('executed query', text);
-//       return pool.query(text, params);
-//     },
-//   };
-    
-export {};
-//export default {}
-
-// export default {
+// module.exports = {
 //     query: (text: any, params: any, cb: any ) => {
 //         //console.log('text:', text)
 //         return pool.query(text, params, cb);
 //     },
-// }
+// };
+// export {};
+
+

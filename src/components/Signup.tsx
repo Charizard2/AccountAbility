@@ -2,7 +2,6 @@ import React, {useState, useRef, useEffect} from 'react';
 import {createPortal} from 'react-dom'
 import {TextField, Container, Box, Grid, Button} from '@mui/material';
 
-
 interface Props {
   setOpenSignup: React.Dispatch<React.SetStateAction<boolean>>;
   setOpenSuccessfulSignup: React.Dispatch<React.SetStateAction<boolean>>;
@@ -10,47 +9,52 @@ interface Props {
 }
   
 
-
-
-
-
 const Signup = ({setOpenSignup, setOpenSuccessfulSignup} : Props) => { 
-  const [username, setUsername] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [password, setPassword] = useState('');
-  const [verifyPassword, setVerifyPassword] = useState('');
-  const [passwordInvalid, setPasswordInvalid] = useState(false);
+  // const [username, setUsername] = useState('');
+  // const [firstName, setFirstName] = useState('');
+  // const [lastName, setLastName] = useState('');
+  // const [password, setPassword] = useState('');
+  // const [verifyPassword, setVerifyPassword] = useState('');
+  // const [passwordInvalid, setPasswordInvalid] = useState(false);
   const [validSignup, setValidSignup] = useState(true);
   const verifyRef = useRef<HTMLInputElement>(null);
+  const [values, setValues] = useState({
+    username: '',
+    firstName: '',
+    lastName: '',
+    password: '',
+    confirmPassword: '',
+    validSignup: true,
+    showPassword: false,
+  });
+  const {username, firstName, lastName, password, confirmPassword} = values
 
   const handleSignup = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if(password !== verifyPassword) {
+    // if(password !== verifyPassword) {
+    if(values.password !== values.confirmPassword) {
       verifyRef.current?.focus();
       return;
     }
 
-    const signupBody = {
-      username,
-      firstName,
-      lastName,
-      password,
-    };
-
+    // const signupBody = {
+    //   username,
+    //   firstName,
+    //   lastName,
+    //   password,
+    // };
 
     fetch('/api/user/signup', {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
       },
-      body: JSON.stringify(signupBody)
+      // body: JSON.stringify(signupBody)
+      body: JSON.stringify({username, firstName, lastName, password})
     }).then(() => {
         setOpenSignup(false);
         setOpenSuccessfulSignup(true);
     })
-
-
   }
 
 
@@ -70,7 +74,8 @@ const Signup = ({setOpenSignup, setOpenSuccessfulSignup} : Props) => {
                 type="text" 
                 required
                 value={username}
-                onChange={e => setUsername(e.currentTarget.value)}
+                onChange={e => setValues({ ...values, username: e.target.value})}
+                // onChange={e => setUsername(e.currentTarget.value)}
                 label="Username" 
                 placeholder="Username"/>
             </Grid>
@@ -80,7 +85,7 @@ const Signup = ({setOpenSignup, setOpenSuccessfulSignup} : Props) => {
                 type="text" 
                 required
                 value={firstName}
-                onChange={e => setFirstName(e.currentTarget.value)}
+                onChange={e => setValues({ ...values, firstName: e.target.value})}
                 label="First name" 
                 placeholder="First name"/>
             </Grid>
@@ -90,7 +95,7 @@ const Signup = ({setOpenSignup, setOpenSuccessfulSignup} : Props) => {
                 required
                 value={lastName}
                 data-testid="last-name"
-                onChange={e => setLastName(e.currentTarget.value)}
+                onChange={e => setValues({ ...values, lastName: e.target.value})}
                 label="Last name" 
                 placeholder="Last name"/>
             </Grid>
@@ -103,7 +108,7 @@ const Signup = ({setOpenSignup, setOpenSuccessfulSignup} : Props) => {
                 data-testid="password"
                 required
                 value={password}
-                onChange={e => setPassword(e.currentTarget.value)}
+                onChange={e => setValues({ ...values, password: e.target.value})}
                 placeholder="Password"/>
             </Grid>
             <Grid 
@@ -115,23 +120,22 @@ const Signup = ({setOpenSignup, setOpenSuccessfulSignup} : Props) => {
                 type="password" 
                 required
                 inputRef={verifyRef}
-                value={verifyPassword}
-                onChange={e => setVerifyPassword(e.currentTarget.value)}
+                value={confirmPassword}
+                onChange={e => setValues({ ...values, confirmPassword: e.target.value})}
                 label="Verify Password"
-                error={(password !== verifyPassword && !!verifyPassword)}
-                helperText={(password !== verifyPassword && !!verifyPassword) && "Passwords do not match"}
+                error={(password !== confirmPassword && !!confirmPassword)}
+                helperText={(password !== confirmPassword && !!confirmPassword) && "Passwords do not match"}
                 placeholder="Verify Password"/>
                 </div>
             </Grid>
             <Grid sx={{'& .MuiButton-root': { marginLeft: "10px", marginRight: "10px"}}}>
               <Button 
                 onClick={() => setOpenSignup(false)}
-                variant="outlined" >Cancel</Button>
+                variant="outlined">Cancel</Button>
               <Button 
                 type="submit" 
-                // onClick={handleSignup}
                 data-testid = "secondary-signup"
-                variant="contained"  >Signup</Button>
+                variant="contained">Signup</Button>
             </Grid>
           </Grid>
           {!validSignup && <p>Username taken please choose another</p>}

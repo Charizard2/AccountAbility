@@ -1,8 +1,14 @@
 import React from 'react'
 import {Box} from '@mui/material'
-import {Link, Routes, Route} from 'react-router-dom'
+import {Link, Routes, Route, redirect} from 'react-router-dom'
 import Feed from './Feed'
 import Profile from './Profile'
+
+const handleLogout = (e) => {
+  fetch('/api/user/logout')
+  .then(data=>console.log('logged user out'))
+  .catch(err=>console.log(err))
+}
 
 const Navbar = () => {
   return (
@@ -20,7 +26,7 @@ const Navbar = () => {
           </Link>
         </li>
         <li id="logout">
-          <Link to='/'>
+          <Link to='/' onClick={(e)=>handleLogout(e)}>
                 Logout
           </Link>
         </li>

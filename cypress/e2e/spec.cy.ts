@@ -9,7 +9,7 @@ let randomUsername:any;
   })
 
   
-  it('passes', async () => {
+  it('signup, login, logout', async () => {
     cy.visit('http://localhost:5173')
     cy.contains('Signup').click();
     cy.get('[data-testid=username]').type(randomUsername)

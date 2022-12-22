@@ -11,35 +11,36 @@ const Login = () => {
   const [openSignup, setOpenSignup] = useState(false);
   const [valid, setValid] = useState(true);
   const [openSuccessfulSignup, setOpenSuccessfulSignup] = useState(false);
-  const [incorrectCreds, setIncorrectCreds] = useState(false);
+  const [userCheck, setUserCheck] = useState(true);
   const navigate = useNavigate();
+  
 
-
-  const handleLogin = () => {
-    setValid(true);
-    setIncorrectCreds(true);
+  const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    setValid(true)
+    setUserCheck(true)
     if(!username || !password) {
       setValid(false);
       return;
     }
 
-    const loginCredentials = {
-      username,
-      password
-    }
-    
-    // fetch('/api/user/login', {
-    //   method: 'POST',
-    //   headers: {
-    //     'content-type': 'application-json'
-    //   },
-    //   body: JSON.stringify(loginCredentials),
-    // }).then(() => {
+    fetch('/api/user/login', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json'
+      },
+      body: JSON.stringify({username, password}),
+    })
+    .then(data=>data.json())
+    .then((data) => {
+      if (data.userExists === false || data.passwordCheck === false) {
+        setUserCheck(false)
+        // alert(data.username + ' does not exist! Please sign up!')
+        return;
+      }
+      console.log(data, 'frontend')
         navigate('/home/feed');        
-    // })
-
-
-
+    })
 
 
   }
@@ -56,7 +57,9 @@ const Login = () => {
         <Box
           component="form"
           id="login-form"
-          onSubmit={e => e.preventDefault()}
+          onSubmit={e => {
+            handleLogin(e)
+          }}
           sx={{
             '& .MuiTextField-root': { m: 1, width: '25ch', backgroundColor: 'white'},
             '& .MuiButton-root':{m:1},
@@ -76,15 +79,15 @@ const Login = () => {
             value={password} 
             onChange={e => setPassword(e.target.value)} label="Password" />
             <div>
-              <Button variant="outlined" data-testid="initial-signup"onClick={() => setOpenSignup(true)} size="medium" type="submit">
+              <Button variant="outlined" data-testid="initial-signup"onClick={() => setOpenSignup(true)} size="medium" >
                 Signup
               </Button>
-              <Button variant="contained" data-testid="login-button" size="medium" onClick={handleLogin} type="submit">
+              <Button variant="contained" data-testid="login-button" size="medium"  type="submit">
                 Login
               </Button>
             </div>
             {!valid && <p>Please enter your username and password.</p>}
-            {incorrectCreds && <p>Incorrect username or password!</p>}
+            {!userCheck && <p>Please enter a valid username or password!</p>}
             
         </Box>
     </Container>

@@ -9,23 +9,24 @@ router.get('/test',  cookieController.verifySSIDCookie, (req: Request, res: Resp
 })
 router.post('/test',  userController.createUser, cookieController.setSSIDCookie, cookieController.verifySSIDCookie, (req: Request, res: Response) => {
   console.log(res.locals)
-// router.post('/test', postController.makePost, cookieController.setSSIDCookie, (req: Request, res: Response) => {
   return res.status(200).json({userRoute:' Works'})
 })
 // userController.verifyUsername, bcrypt.verifyPassword, cookieController.setCookie,   
 // reacType: userCOntroller.verifyUser, cookieController.setSSIDCookie, sessionController.startSession
-router.get('/login', userController.verifyUser, (req: Request, res: Response) => {
-  return res.status(200).json({})
+
+router.post('/login', userController.verifyUser, cookieController.setSSIDCookie, cookieController.verifySSIDCookie, (req: Request, res: Response) => {
+  console.log('router', res.locals)
+  return res.status(200).json(res.locals)
 })
 
 // userController.createUser (check if username exists), bcrypt.hashPassword (hash PW and send username/pw to DB),  
 // reacType: userController.createUser, cookieController.setSSIDCookie, sessionController.startSession
-router.post('/signup', userController.createUser, (req: Request, res: Response) => {
+router.post('/signup', userController.createUser, cookieController.setSSIDCookie, cookieController.verifySSIDCookie, (req: Request, res: Response) => {
   return res.status(200).json({})
 })
 // userController.logout (delete hashed cookie)
-router.get('/logout', (req: Request, res: Response) => {
-  return res.status(200).json({})
+router.get('/logout', cookieController.logout, (req: Request, res: Response) => {
+  return res.status(200).json({log:'meout'})
 })
 
 
