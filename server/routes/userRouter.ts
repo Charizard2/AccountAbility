@@ -28,4 +28,9 @@ router.get('/logout', (req: Request, res: Response) => {
   return res.status(200).json({})
 })
 
-export default router
+
+router.get('/deleteTest', (req,res) => {
+  return res.sendStatus(200);
+})
+
+export default router;

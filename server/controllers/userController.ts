@@ -11,14 +11,23 @@ const db = require('../models/UserModel')
 type UserController = {
     createUser: RequestHandler;
     verifyUser: RequestHandler;
+    // deleteCypressUser: RequestHandler;
 }
 
 const userController: UserController = {
     //Inserts userInfo from setup page into user table
     createUser: async (req, res, next) => {
-
+        console.log('in create user');
         const {username, password, firstName, lastName} = req.body;
         if (!username || !password || !firstName || !lastName) return next({message:{err:'Please fill out all fields!'}})
+        // if (username === 'asdfasdfasdfasdf'){
+        //     //const inputy = []
+            
+        //     const queryString = `DELETE FROM "Users" WHERE username="asdfasdfasdfasdf"`;
+        //     //await
+        //      db.query(queryString)
+        // }
+
         const saltRounds = 10
         bcrypt.hash(password, saltRounds, (err: any, hashedPW: string) => {
             if (err){
@@ -77,9 +86,17 @@ const userController: UserController = {
 
             })
         })
-
-        
-    }
+    },
+    
+    // deleteCypressUser: async (req, res, next) => {
+    //    const cypressUser = 'asdfasdfasdfasdf' 
+    //     const queryString = `DELETE FROM "Users" WHERE username=$1`
+    //     db.query(queryString, [cypressUser])
+    //     .then((data:any)=>{
+    //         console.log('Cypress test username deleted')
+    //         return next()
+    //     })
+    // },
 }
 
  export default userController;

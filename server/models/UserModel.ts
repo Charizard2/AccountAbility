@@ -1,9 +1,12 @@
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
+
+// import * as pkg from 'pg';
+// const { Pool } = pkg;
 const { Pool } = require('pg');
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-//require('dotenv').config();
+require('dotenv').config();
 //const url: any = process.env.PG_URI;
 // const postgresUrl:any = process.env.POSTGRES_URL;
 // console.log(postgresUrl)
@@ -20,7 +23,17 @@ module.exports = {
         return pool.query(text, params, cb);
     },
 };
-export {}
+
+// const db = {  
+//     query: (text: string, params: string[]) => {
+//       console.log('executed query', text);
+//       return pool.query(text, params);
+//     },
+//   };
+    
+export {};
+//export default {}
+
 // export default {
 //     query: (text: any, params: any, cb: any ) => {
 //         //console.log('text:', text)

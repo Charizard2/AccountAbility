@@ -28,19 +28,15 @@ const Login = () => {
       password
     }
     
-    fetch('/user/login', {
-      method: 'POST',
-      headers: {
-        'content-type': 'application-json'
-      },
-      body: JSON.stringify(loginCredentials),
-    }).then((response) => {
-      if(response.status === 200) {
+    // fetch('/api/user/login', {
+    //   method: 'POST',
+    //   headers: {
+    //     'content-type': 'application-json'
+    //   },
+    //   body: JSON.stringify(loginCredentials),
+    // }).then(() => {
         navigate('/home/feed');        
-      } else {
-        setIncorrectCreds(true);
-      }
-    })
+    // })
 
 
 
@@ -70,18 +66,20 @@ const Login = () => {
           <TextField 
             label="Username"
             placeholder="Username"
+            data-testid="username-login"
             value={username} 
             onChange={e => setUsername(e.target.value)}/>
           <TextField 
             type="password" 
             placeholder="Password"
+            data-testid="password-login"
             value={password} 
             onChange={e => setPassword(e.target.value)} label="Password" />
             <div>
-              <Button variant="outlined" onClick={() => setOpenSignup(true)} size="medium" type="submit">
+              <Button variant="outlined" data-testid="initial-signup"onClick={() => setOpenSignup(true)} size="medium" type="submit">
                 Signup
               </Button>
-              <Button variant="contained" size="medium" onClick={handleLogin} type="submit">
+              <Button variant="contained" data-testid="login-button" size="medium" onClick={handleLogin} type="submit">
                 Login
               </Button>
             </div>

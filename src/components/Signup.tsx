@@ -45,16 +45,9 @@ const Signup = ({setOpenSignup, setOpenSuccessfulSignup} : Props) => {
         'content-type': 'application/json',
       },
       body: JSON.stringify(signupBody)
-    }).then((response) => {
-      if(response.status === 200) {
+    }).then(() => {
         setOpenSignup(false);
         setOpenSuccessfulSignup(true);
-        return;
-      } else {
-        setValidSignup(false);
-      }
-
-      
     })
 
 
@@ -73,6 +66,7 @@ const Signup = ({setOpenSignup, setOpenSuccessfulSignup} : Props) => {
           >
             <Grid item>
               <TextField 
+                data-testid="username"
                 type="text" 
                 required
                 value={username}
@@ -82,6 +76,7 @@ const Signup = ({setOpenSignup, setOpenSuccessfulSignup} : Props) => {
             </Grid>
             <Grid item>
               <TextField 
+                data-testid="first-name"
                 type="text" 
                 required
                 value={firstName}
@@ -94,6 +89,7 @@ const Signup = ({setOpenSignup, setOpenSuccessfulSignup} : Props) => {
                 type="text" 
                 required
                 value={lastName}
+                data-testid="last-name"
                 onChange={e => setLastName(e.currentTarget.value)}
                 label="Last name" 
                 placeholder="Last name"/>
@@ -104,6 +100,7 @@ const Signup = ({setOpenSignup, setOpenSuccessfulSignup} : Props) => {
               <TextField
                 type="password" 
                 label="Password" 
+                data-testid="password"
                 required
                 value={password}
                 onChange={e => setPassword(e.currentTarget.value)}
@@ -114,6 +111,7 @@ const Signup = ({setOpenSignup, setOpenSuccessfulSignup} : Props) => {
             >
               <div>
               <TextField 
+                data-testid="verify-password"
                 type="password" 
                 required
                 inputRef={verifyRef}
@@ -132,6 +130,7 @@ const Signup = ({setOpenSignup, setOpenSuccessfulSignup} : Props) => {
               <Button 
                 type="submit" 
                 // onClick={handleSignup}
+                data-testid = "secondary-signup"
                 variant="contained"  >Signup</Button>
             </Grid>
           </Grid>
