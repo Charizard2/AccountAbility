@@ -15,7 +15,6 @@ router.post('/test',  userController.createUser, cookieController.setSSIDCookie,
 // reacType: userCOntroller.verifyUser, cookieController.setSSIDCookie, sessionController.startSession
 
 router.post('/login', userController.verifyUser, cookieController.setSSIDCookie, cookieController.verifySSIDCookie, (req: Request, res: Response) => {
-  console.log('router', res.locals)
   return res.status(200).json(res.locals)
 })
 

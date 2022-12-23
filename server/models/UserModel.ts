@@ -19,7 +19,7 @@ const pool: any = new Pool({
 
 export default  {
     query: (text: any, params: any, cb?: any ) => {
-        //console.log('text:', text)
+        console.log('Query:', text)
         return pool.query(text, params, cb);
     },
 }

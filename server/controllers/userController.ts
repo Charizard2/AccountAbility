@@ -49,8 +49,9 @@ const userController: UserController = {
         db.query(queryString, inputVal)
         .then((data: any)=>{
             if (!data.rows[0]) {
+                console.log('User does not exist!')
                 res.locals.userExists = false;
-                return next()
+                return res.status(401).json(res.locals)
             }
             bcrypt.compare(password, data.rows[0].password)
             .then(hash=> {
@@ -58,8 +59,9 @@ const userController: UserController = {
                     console.log('Login successful!')
                     return next()
                 }
+                console.log('Password does not match')
                 res.locals.passwordCheck = false
-                return next()
+                return res.status(401).json(res.locals)
             })
             .catch((err) => {
                 return next({

@@ -38,7 +38,6 @@ export const cookieController:cookieController = {
       const queryString = `SELECT * FROM "Users" WHERE username=$1`
       db.query(queryString, [username])
       .then((data: any) => {
-        console.log('123',res.locals.cookie, data.rows[0].ssid)
         bcrypt.compare(res.locals.cookie, data.rows[0].ssid)
         .then((cookie)=>{
           if (cookie) {
@@ -61,9 +60,9 @@ export const cookieController:cookieController = {
       }))
   },
   logout: (req, res, next) => {
-    console.log(req.cookies)
-    res.clearCookie('ssid')
-    console.log(req.cookies)
+    console.log('before', req.cookies)
+    res.clearCookie('ssid') // seems to only clear browser cookie but server still has hashed cookie
+    console.log('after', req.cookies)
     return next()
     // const { username } = res.locals;
     // const queryString = 'UPDATE "Users" SET "ssid"=NULL WHERE username=$1 RETURNING *;'

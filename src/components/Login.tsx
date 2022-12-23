@@ -35,7 +35,6 @@ const Login = () => {
     .then((data) => {
       if (data.userExists === false || data.passwordCheck === false) {
         setUserCheck(false)
-        // alert(data.username + ' does not exist! Please sign up!')
         return;
       }
       console.log(data, 'frontend')
