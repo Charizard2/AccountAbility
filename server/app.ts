@@ -7,6 +7,7 @@ import postRouter from './routes/postRouter'
 import commentRouter from './routes/commentRouter'
 import cors from 'cors'
 import session from 'express-session'
+import { cookieController } from './controllers/cookieController'
 import filestore, {FileStore} from 'session-file-store'
 
 export const app = express();
@@ -30,7 +31,10 @@ app.use(session({
 }))
 
 // verifies session everytime user visits a page
-
+app.get('/api/home', cookieController.verifySSIDCookie, (req:Request, res: Response) => {
+  console.log('checking cookie')
+  return res.status(200)
+})
 
 // serves index.html page
 app.get('/', (req: Request, res: Response) => {

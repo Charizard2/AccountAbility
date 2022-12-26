@@ -25,6 +25,7 @@ const userController: UserController = {
                 const queryString = 'INSERT INTO "Users"(username, password, firstName, lastName) VALUES($1,$2,$3,$4) RETURNING *'
                 db.query(queryString, inputVal)
                 .then((data: any) => {
+                    console.log(data.rows[0])
                     res.locals.username = username
                     res.locals.userCreated = true;
                     console.log('user created successfully')

@@ -1,6 +1,6 @@
 import React, {useState, useRef, useEffect} from 'react';
 import {createPortal} from 'react-dom'
-import {TextField, Container, Box, Grid, Button} from '@mui/material';
+import {TextField, Container, Box, Grid, Button, Typography} from '@mui/material';
 
 interface Props {
   setOpenSignup: React.Dispatch<React.SetStateAction<boolean>>;
@@ -51,9 +51,18 @@ const Signup = ({setOpenSignup, setOpenSuccessfulSignup} : Props) => {
       },
       // body: JSON.stringify(signupBody)
       body: JSON.stringify({username, firstName, lastName, password})
-    }).then(() => {
+    })
+    .then(data=>data.json())
+    .then((data) => {
+      if (data.err){
+        setValidSignup(false)
+        return;
+      }
         setOpenSignup(false);
         setOpenSuccessfulSignup(true);
+    })
+    .catch((err)=>{
+      console.log('signup error', err)
     })
   }
 
@@ -138,7 +147,7 @@ const Signup = ({setOpenSignup, setOpenSuccessfulSignup} : Props) => {
                 variant="contained">Signup</Button>
             </Grid>
           </Grid>
-          {!validSignup && <p>Username taken please choose another</p>}
+          {!validSignup && <Typography align= 'center'  sx={{m:1}}>Username taken please choose another</Typography>}
         </Box>
     </Container>, 
       document.body

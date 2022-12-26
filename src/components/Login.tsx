@@ -33,12 +33,15 @@ const Login = () => {
     })
     .then(data=>data.json())
     .then((data) => {
-      if (data.userExists === false || data.passwordCheck === false) {
+      if (data.userExists === false || data.passwordCheck === false || data.err) {
         setUserCheck(false)
         return;
       }
-      console.log(data, 'frontend')
+      console.log(data, 'login/frontend')
         navigate('/home/feed');        
+    })
+    .catch(err=>{
+      console.log('login error', err)
     })
 
 
