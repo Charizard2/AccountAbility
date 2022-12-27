@@ -31,10 +31,10 @@ app.use(session({
 }))
 
 // verifies session everytime user visits a page
-app.get('/api/home', cookieController.verifySSIDCookie, (req:Request, res: Response) => {
-  console.log('checking cookie')
-  return res.status(200)
-})
+// app.get('/api/home', cookieController.verifySSIDCookie, (req:Request, res: Response) => {
+//   console.log('checking cookie')
+//   return res.status(200)
+// })
 
 // serves index.html page
 app.get('/', (req: Request, res: Response) => {

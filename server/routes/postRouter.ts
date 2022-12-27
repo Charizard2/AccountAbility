@@ -4,11 +4,11 @@ import postController from '../controllers/postController'
 
 const router = express.Router()
 
-router.post('/post', postController.makePost, (req: Request, res: Response) => {
-  return res.status(200).json({postRouter: 'works'})
+router.post('/', postController.makePost, (req: Request, res: Response) => {
+  return res.status(200).json(res.locals.postCreated)
 });
 
-router.get('/getPosts', postController.getPosts, (req: Request, res: Response) => {
+router.get('/', postController.getPosts, (req: Request, res: Response) => {
   return res.status(200).json({posts: res.locals.posts})
 })
 

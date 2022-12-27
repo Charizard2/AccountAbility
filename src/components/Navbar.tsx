@@ -15,7 +15,7 @@ const Navbar = () => {
     <>
       <Box id="navbar">
         <li>
-          <Link to='/home/feed'>
+          <Link to='/home'>
                 Home
           </Link>
         </li>

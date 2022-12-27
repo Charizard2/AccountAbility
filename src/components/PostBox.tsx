@@ -1,31 +1,45 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {Container, TextField, Box, Button, Typography} from '@mui/material'
 
 
 const PostBox = () => {
   const [post, setPost] = useState('');
+  const [alert, setAlert] = useState(false)
 
-  const handleSubmit = () => {
+  useEffect(()=> {
+    setTimeout(()=>{
+      setAlert(false)
+    },3000)
+  },[alert])
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
     const body = {
       post
     }
 
 
     // maybe use usemutation here
-    fetch('/post', {
+    fetch('/api/post', {
       method: 'POST',
       headers: {
-        'content-type': 'application-json'
+        'content-type': 'application/json'
       },
-      body: JSON.stringify(body)
-    }).then(() => {
-      setPost('');
+      body: JSON.stringify({post})
     })
+    .then(data=>data.json())
+    .then((data) => {
+      if (data) {
+        setPost('')
+        return setAlert(true)
+      }
+    })
+    .catch(err=>console.log(err))
   }
 
 
   return (
-    <Box id="post-box" component="form" onSubmit={(e) => e.preventDefault()}>
+    <Box id="post-box" component="form" onSubmit={(e) => handleSubmit(e)}>
       <TextField
         id="post-input"
         required
@@ -33,7 +47,9 @@ const PostBox = () => {
         value={post}
         onChange={e => setPost(e.currentTarget.value)}
       />
-      <Button variant="contained" onClick={handleSubmit}>POST</Button>
+      <Button variant="contained" type='submit' sx={{m:1}} >POST</Button>
+      <br/>
+      {alert && <Typography>Successful Post!</Typography>}
     </Box>
   )
 }

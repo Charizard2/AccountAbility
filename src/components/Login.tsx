@@ -38,7 +38,7 @@ const Login = () => {
         return;
       }
       console.log(data, 'login/frontend')
-        navigate('/home/feed');        
+        navigate('/home');        
     })
     .catch(err=>{
       console.log('login error', err)

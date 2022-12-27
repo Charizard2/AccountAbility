@@ -1,8 +1,7 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
 
 import {RequestHandler} from 'express';
-const db = require('../models/UserModel');
-
+import db from '../models/UserModel'
+import bcrypt from 'bcrypt'
 type PostController = {
     makePost: RequestHandler;
     getPosts: RequestHandler;
@@ -12,25 +11,27 @@ type PostController = {
 const postController: PostController = {
     
     makePost: async (req, res, next) => {
+        // when user makes post, compare cookie to validate user
         const likes = 0; 
         let id: any = undefined; 
-        const {content, username } = req.body;
-        const inputVal2 = [username]
-        const queryString2 = 'SELECT user_id FROM "Users" WHERE username = $1'
-        db.query(queryString2, inputVal2)
+        const {post } = req.body;
+        const {ssid} = req.cookies
+        const value = [ssid]
+        // bcrypt.compare(ssid)
+        const findUserText = 'SELECT * FROM "Users" WHERE ssid = $1'
+        db.query(findUserText, value)
         .then((data: any) => {
-             id = data.rows[0].user_id;
-             const inputVal = [content, id, likes];
-             console.log('id', id)
-             const queryString = `INSERT INTO "Post_Table"(content, id, likes) VALUES($1, $2, $3)`;
-             db.query(queryString, inputVal)
-                     .then((data: any) => {
-                         console.log('success making post')
-                         //userInfo = await db.query(queryString,inputVal);
+            const {username, firstname, lastname, user_id} = data.rows[0]
+            const inputVal = [post, user_id, likes];
+            const queryString = `INSERT INTO "Post_Table"(content, id, likes) VALUES($1, $2, $3) RETURNING *`;
+            db.query(queryString, inputVal)
+                     .then((data: any) => { 
+                        // console.log(data.rows[0])
+                        console.log('post was successfully created')
                          res.locals.postCreated = true;
-                         console.log('post created successfully')
                          return next();
-                     }).catch((err: any) => {
+                     })
+                     .catch((err: any) => {
                          res.locals.postCreated = false;
                          return next({
                              log: `Error occured in postController.makePost`,
@@ -51,32 +52,48 @@ const postController: PostController = {
 
 
     getPosts: async (req, res, next) => { 
-        let id: any = undefined; 
-        const {username } = req.body;
-        const inputVal2 = [username]
-        const queryString2 = 'SELECT user_id FROM "Users" WHERE username = $1'
-        db.query(queryString2, inputVal2)
+   
+        const queryString = 'SELECT * FROM "Post_Table"'
+        db.query(queryString, [])
         .then((data: any) => {
-             id = data.rows[0].user_id;
-             const inputVal = [ id ];
-             const queryString = 'SELECT content FROM "Post_Table" WHERE id = $1'
-                db.query(queryString, inputVal)
-                .then((data: any) => {
-                console.log(data.rows)
-                res.locals.posts = data.rows;
-                    if (!data){
-                        return next("No posts")
-                    } else {
-                        return next();
-                        }})
-            }).catch((err: any) => {
-                return next(err)
+             console.log('fetching posts', data.rows)
+             res.locals.posts = data.rows
+                   return next()
+            })
+            .catch((err:any)=> {
+                return next({
+                    log:'Error in postController.getPosts',
+                    status:500,
+                    message:{err:'An error occured in postControler.getPosts'}
+                })
             })
         },
+    // getPosts: async (req, res, next) => { 
+    //     let id: any = undefined; 
+    //     const {username } = req.body;
+    //     const inputVal2 = [username]
+    //     const queryString2 = 'SELECT user_id FROM "Users" WHERE username = $1'
+    //     db.query(queryString2, inputVal2)
+    //     .then((data: any) => {
+    //          id = data.rows[0].user_id;
+    //          const inputVal = [ id ];
+    //          const queryString = 'SELECT content FROM "Post_Table" WHERE id = $1'
+    //             db.query(queryString, inputVal)
+    //             .then((data: any) => {
+    //             console.log(data.rows)
+    //             res.locals.posts = data.rows;
+    //                 if (!data){
+    //                     return next("No posts")
+    //                 } else {
+    //                     return next();
+    //                     }})
+    //         }).catch((err: any) => {
+    //             return next(err)
+    //         })
+    //     },
 };
 
 
 
 
 export default postController;
-export {};
