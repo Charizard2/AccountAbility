@@ -1,33 +1,28 @@
-import React from 'react'
-import {Box} from '@mui/material'
-import {Link, Routes, Route, redirect} from 'react-router-dom'
-import Feed from './Feed'
-import Profile from './Profile'
+import React from "react";
+import { Box } from "@mui/material";
+import { Link, Routes, Route, redirect } from "react-router-dom";
+import Feed from "./Feed";
+import Profile from "./Profile";
 
-const handleLogout = (e) => {
-  fetch('/api/user/logout')
-  .then(data=>console.log('logged user out'))
-  .catch(err=>console.log(err))
-}
+const handleLogout = (e: React.FormEvent) => {
+  fetch("/api/user/logout")
+    .then((data) => console.log("logged user out"))
+    .catch((err) => console.log(err));
+};
 
 const Navbar = () => {
   return (
     <>
       <Box id="navbar">
         <li>
-          <Link to='/home'>
-                Home
-          </Link>
+          <Link to="/home">Home</Link>
         </li>
         <li>
-          <Link 
-            to='/home/profile'>
-                Profile
-          </Link>
+          <Link to="/home/profile">Profile</Link>
         </li>
         <li id="logout">
-          <Link to='/' onClick={(e)=>handleLogout(e)}>
-                Logout
+          <Link to="/" onClick={(e) => handleLogout(e)}>
+            Logout
           </Link>
         </li>
       </Box>
@@ -36,7 +31,7 @@ const Navbar = () => {
         <Route path="/profile" element={<Profile/>}/>
       </Routes> */}
     </>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;
